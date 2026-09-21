@@ -1,0 +1,10 @@
+{
+  "move_duration_ms": 170,
+  "reduced_motion_move_duration_ms": 90,
+  "min_cell_px": 26,
+  "min_cell_px_large_ui": 38,
+  "swipe_threshold_px": 22,
+  "tilt_threshold": 2.2,
+  "autosave_interval_ms": 2000,
+  "full_unlock_product_id": "maze_adventure_full_unlock"
+}
