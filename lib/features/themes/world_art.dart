@@ -409,7 +409,9 @@ class ScenePainter extends CustomPainter {
     }
 
     if (dim) {
-      canvas.drawRect(rect, _fill(Colors.black.withValues(alpha: 0.35)));
+      // Dark mode only takes the glare off the scene; dimming it further
+      // turned the worlds muddy on a real phone.
+      canvas.drawRect(rect, _fill(Colors.black.withValues(alpha: 0.16)));
     }
   }
 

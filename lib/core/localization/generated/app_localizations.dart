@@ -947,7 +947,7 @@ abstract class AppLocalizations {
   /// No description provided for @privacyBody.
   ///
   /// In en, this message translates to:
-  /// **'Maze Adventure has no accounts and no servers. Your progress, statistics and settings stay on this device and are never sent anywhere. The game needs no internet connection. The app only goes online if a grown-up chooses to buy Full Unlock through the App Store or Google Play.'**
+  /// **'Maze Adventure has no accounts and no servers. Your progress, statistics and settings stay on this device and are never sent anywhere, and the game itself plays offline. The app does go online for two things: the ads shown at the bottom of the screen and between mazes, which come from Google AdMob and are set to child-directed, family-friendly ads only; and the optional Full Unlock purchase, which a grown-up makes through the App Store or Google Play. Full Unlock also removes the ads.'**
   String get privacyBody;
 
   /// No description provided for @about.
@@ -971,7 +971,7 @@ abstract class AppLocalizations {
   /// No description provided for @fullUnlockBody.
   ///
   /// In en, this message translates to:
-  /// **'Unlock every character, world and maze size right away. One payment, no ads, no subscriptions. Everything can also be unlocked for free just by playing.'**
+  /// **'Unlock every character, world and maze size right away, and remove the ads. One payment, no subscriptions. Everything can also be unlocked for free just by playing.'**
   String get fullUnlockBody;
 
   /// No description provided for @buyFor.

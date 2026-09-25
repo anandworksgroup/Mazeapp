@@ -18,11 +18,29 @@
   "go": "GO!",
   "locked": "Locked",
   "unlockCompletions": "Finish {count} mazes",
-  "@unlockCompletions": {"placeholders": {"count": {"type": "int"}}},
+  "@unlockCompletions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "unlockStars": "Collect {count} stars",
-  "@unlockStars": {"placeholders": {"count": {"type": "int"}}},
+  "@unlockStars": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "unlockSize": "Beat a {size} maze",
-  "@unlockSize": {"placeholders": {"size": {"type": "String"}}},
+  "@unlockSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
   "selected": "Selected",
   "sizeTiny": "Tiny",
   "sizeSmall": "Small",
@@ -78,7 +96,16 @@
   "achStreak3": "On a Roll",
   "achStreak3Desc": "Play 3 days in a row",
   "achievementsProgress": "{count} of {total} unlocked",
-  "@achievementsProgress": {"placeholders": {"count": {"type": "int"}, "total": {"type": "int"}}},
+  "@achievementsProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "statMazesCompleted": "Mazes completed",
   "statBestTime": "Best time",
   "statPlayTime": "Total play time",
@@ -93,11 +120,32 @@
   "bestBySize": "Best by size",
   "noneYet": "—",
   "days": "{count, plural, =1{1 day} other{{count} days}}",
-  "@days": {"placeholders": {"count": {"type": "int"}}},
+  "@days": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "durationHm": "{h}h {m}m",
-  "@durationHm": {"placeholders": {"h": {"type": "int"}, "m": {"type": "int"}}},
+  "@durationHm": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "int"
+      }
+    }
+  },
   "durationM": "{m}m",
-  "@durationM": {"placeholders": {"m": {"type": "int"}}},
+  "@durationM": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
   "soundAndPlay": "Sound & play",
   "sound": "Sound",
   "music": "Music",
@@ -148,21 +196,42 @@
   "reset": "Reset",
   "resetDone": "All progress deleted.",
   "privacy": "Privacy",
-  "privacyBody": "Maze Adventure has no accounts and no servers. Your progress, statistics and settings stay on this device and are never sent anywhere. The game needs no internet connection. The app only goes online if a grown-up chooses to buy Full Unlock through the App Store or Google Play.",
+  "privacyBody": "Maze Adventure has no accounts and no servers. Your progress, statistics and settings stay on this device and are never sent anywhere, and the game itself plays offline. The app does go online for two things: the ads shown at the bottom of the screen and between mazes, which come from Google AdMob and are set to child-directed, family-friendly ads only; and the optional Full Unlock purchase, which a grown-up makes through the App Store or Google Play. Full Unlock also removes the ads.",
   "about": "About",
   "aboutBody": "Version {version}\n\nMade for curious explorers of every age. Every maze is generated on your device, so there's always a new one to solve.",
-  "@aboutBody": {"placeholders": {"version": {"type": "String"}}},
+  "@aboutBody": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "fullUnlock": "Full Unlock",
-  "fullUnlockBody": "Unlock every character, world and maze size right away. One payment, no ads, no subscriptions. Everything can also be unlocked for free just by playing.",
+  "fullUnlockBody": "Unlock every character, world and maze size right away, and remove the ads. One payment, no subscriptions. Everything can also be unlocked for free just by playing.",
   "buyFor": "Unlock for {price}",
-  "@buyFor": {"placeholders": {"price": {"type": "String"}}},
+  "@buyFor": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "restorePurchases": "Restore purchase",
   "storeUnavailable": "The store isn't available right now. Check the internet connection and try again.",
   "purchaseDone": "Everything is unlocked. Thank you!",
   "purchaseFailed": "The purchase didn't go through.",
   "askGrownUp": "Ask a grown-up",
   "parentGate": "What is {a} × {b}?",
-  "@parentGate": {"placeholders": {"a": {"type": "int"}, "b": {"type": "int"}}},
+  "@parentGate": {
+    "placeholders": {
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      }
+    }
+  },
   "check": "Check",
   "close": "Close",
   "ok": "OK",

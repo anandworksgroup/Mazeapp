@@ -281,12 +281,16 @@ class _MenuTile extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 6),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: p.ink, height: 1.1),
+            // Long labels shrink rather than breaking mid-word, which they
+            // did at 360dp width ("Achieveme / nts").
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: p.ink, height: 1.1),
+              ),
             ),
           ],
         ),

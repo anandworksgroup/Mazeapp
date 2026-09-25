@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:maze_adventure/app/app.dart';
 import 'package:maze_adventure/app/app_controller.dart';
+import 'package:maze_adventure/core/ads/ad_service.dart';
 import 'package:maze_adventure/core/audio/audio_service.dart';
 import 'package:maze_adventure/core/constants/game_config.dart';
 import 'package:maze_adventure/core/utilities/purchase_service.dart';
@@ -28,6 +29,7 @@ Future<AppServices> testBoot(AssetBundle bundle) async {
   return AppServices(
     controller: controller,
     audio: AudioService(enabled: false),
+    ads: AdService(enabled: false),
     config: config,
     purchases: PurchaseService(
         productId: config.fullUnlockProductId,

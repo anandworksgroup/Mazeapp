@@ -67,6 +67,7 @@ class _GameScreenState extends State<GameScreen>
   bool _needsTiltCalibration = false;
   CompletionResult? _result;
   bool _dirty = false;
+  bool _interstitialDue = false;
 
   Offset _swipeAcc = Offset.zero;
 
@@ -262,6 +263,7 @@ class _GameScreenState extends State<GameScreen>
     _mover.clear();
     final audio = context.audio;
     final controller = context.appRead;
+    final ads = context.ads;
     audio.play(Sfx.goal);
     audio.haptic(HapticKind.success);
     setState(() => _pose = CharacterPose.celebrate);
@@ -273,6 +275,9 @@ class _GameScreenState extends State<GameScreen>
       characterId: _launch.characterId,
       mode: _launch.mode,
     );
+    // The full-screen ad is counted here but shown only when the player
+    // leaves the result screen, so it never lands on the celebration.
+    _interstitialDue = ads.countMazeAndCheck();
     await Future<void>.delayed(Duration(milliseconds: _settings.animations ? 1100 : 300));
     if (!mounted) return;
     audio.play(Sfx.success);
@@ -443,6 +448,7 @@ class _GameScreenState extends State<GameScreen>
   }
 
   Future<void> _newMaze() async {
+    await _showInterstitialIfDue();
     await _abandonIfPlayed();
     if (!mounted) return;
     final app = context.appRead;
@@ -463,6 +469,14 @@ class _GameScreenState extends State<GameScreen>
     _syncTiltCalibration();
   }
 
+  /// Plays the pending full-screen ad, if one is due. Safe to call anywhere:
+  /// with no ad loaded it returns at once.
+  Future<void> _showInterstitialIfDue() async {
+    if (!_interstitialDue) return;
+    _interstitialDue = false;
+    await context.ads.showInterstitialIfDue();
+  }
+
   void _syncTiltCalibration() {
     if (_settings.controlMode == ControlMode.tilt) {
       setState(() => _needsTiltCalibration = true);
@@ -470,12 +484,14 @@ class _GameScreenState extends State<GameScreen>
   }
 
   Future<void> _home() async {
+    await _showInterstitialIfDue();
     await _save();
     if (!mounted) return;
     Navigator.of(context).popUntil((r) => r.isFirst);
   }
 
   Future<void> _change() async {
+    await _showInterstitialIfDue();
     if (!mounted) return;
     Navigator.of(context).pushReplacementNamed(Routes.play);
   }

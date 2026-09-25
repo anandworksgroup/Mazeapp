@@ -27,6 +27,11 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <!-- AdMob app id. Defaults to Google's public test id; pass a real
+             one at build time with -PadmobAppId=ca-app-pub-xxx~yyy . -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="${admobAppId}" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

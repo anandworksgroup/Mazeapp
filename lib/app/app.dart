@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import '../core/ads/ad_banner.dart';
+import '../core/ads/ad_service.dart';
 import '../core/audio/audio_service.dart';
 import '../core/constants/game_config.dart';
 import '../core/localization/l10n.dart';
@@ -21,15 +25,18 @@ class AppServices {
     required this.audio,
     required this.config,
     required this.purchases,
+    required this.ads,
   });
 
   final AppController controller;
   final AudioService audio;
   final GameConfig config;
   final PurchaseService purchases;
+  final AdService ads;
 
   /// Launch sequence: open the local database (creating the local player
-  /// profile on first run), load bundled config, prepare sounds. No network.
+  /// profile on first run), load bundled config, prepare sounds, start the ad
+  /// SDK. Only the ads reach for the network, and never block the game.
   static Future<AppServices> boot(AssetBundle bundle) async {
     final db = await AppDatabase.open();
     final controller = AppController(db);
@@ -45,11 +52,15 @@ class AppServices {
       productId: config.fullUnlockProductId,
       onEntitled: controller.grantFullUnlock,
     )..start();
+    final ads = AdService()..applyEntitlement(fullUnlock: controller.player.fullUnlock);
+    // Fire and forget: the first frame must not wait for the ad SDK.
+    unawaited(ads.init());
     return AppServices(
       controller: controller,
       audio: audio,
       config: config,
       purchases: purchases,
+      ads: ads,
     );
   }
 }
@@ -80,7 +91,10 @@ class _MazeAdventureAppState extends State<MazeAdventureApp>
     try {
       final boot = widget.boot ?? AppServices.boot;
       final services = await boot(rootBundle);
-      services.controller.addListener(() => services.audio.apply(services.controller.settings));
+      services.controller.addListener(() {
+        services.audio.apply(services.controller.settings);
+        services.ads.applyEntitlement(fullUnlock: services.controller.player.fullUnlock);
+      });
       if (mounted) setState(() => _services = services);
     } catch (e, st) {
       debugPrint('boot failed: $e\n$st');
@@ -119,6 +133,7 @@ class _MazeAdventureAppState extends State<MazeAdventureApp>
       audio: services.audio,
       config: services.config,
       purchases: services.purchases,
+      ads: services.ads,
       child: ListenableBuilder(
         listenable: services.controller,
         builder: (context, _) {
@@ -152,7 +167,14 @@ class _MazeAdventureAppState extends State<MazeAdventureApp>
                       : mq.textScaler.clamp(maxScaleFactor: 1.3),
                   disableAnimations: !s.animations || mq.disableAnimations,
                 ),
-                child: child!,
+                // The banner lives here so every screen keeps it, and so the
+                // screen above it never draws underneath an ad.
+                child: Column(
+                  children: [
+                    Expanded(child: child!),
+                    RepaintBoundary(child: AdBannerBar(ads: services.ads)),
+                  ],
+                ),
               );
             },
           );

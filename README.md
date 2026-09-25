@@ -6,9 +6,9 @@ generated mazes forever.
 
 - **No login, no account, no backend.** First launch creates a local profile
   (a random UUID that never leaves the device).
-- **Works in airplane mode.** The game never needs the internet. The only
-  network use is the optional Full Unlock purchase, and only after a grown-up
-  opens that page.
+- **Works in airplane mode.** Gameplay never needs the internet. The network is
+  only used by the AdMob ads and by the optional Full Unlock purchase; with no
+  connection the ads simply do not appear and the game is unaffected.
 - **All artwork and audio are original and generated from code**: the
   characters, worlds and goals are vector painters, and the sounds and music
   are synthesised by `tool/generate_audio.py`.
@@ -58,8 +58,51 @@ lib/
     statistics/   My Journey
     settings/     settings, Full Unlock
 assets/           sounds/, music/, config/game_config.json
-tool/             generate_audio.py, generate_icons_test.dart, solve_swipes.dart
+tool/             generate_audio.py, generate_icons_test.dart, solve_swipes.dart,
+                  generate_store_assets.py, make_demo_backup.py
+store/            app icon, Play screenshots and listing text
 ```
+
+## Ads
+
+Google AdMob, configured for a children's audience
+(`tagForChildDirectedTreatment`, `tagForUnderAgeOfConsent`, content rating G):
+
+- a banner pinned to the bottom of every screen (`AdBannerBar`, in the app
+  shell) that takes up no space at all until an ad has loaded;
+- a full-screen ad after every second finished maze, shown when the player
+  leaves the result screen rather than on top of the celebration, and never
+  twice within 45 seconds;
+- buying **Full Unlock** removes both.
+
+The repository only contains Google's public **test** ad ids, so debug builds
+can never touch live inventory. Real ids go in at build time:
+
+```bash
+flutter build appbundle --release \
+  -PadmobAppId=ca-app-pub-XXX~YYY \
+  --dart-define=ADMOB_BANNER_ANDROID=ca-app-pub-XXX/YYY \
+  --dart-define=ADMOB_INTERSTITIAL_ANDROID=ca-app-pub-XXX/YYY \
+  --dart-define=ADMOB_BANNER_IOS=ca-app-pub-XXX/YYY \
+  --dart-define=ADMOB_INTERSTITIAL_IOS=ca-app-pub-XXX/YYY
+```
+
+The iOS app id lives in `ios/Runner/Info.plist` (`GADApplicationIdentifier`)
+and must be swapped there by hand.
+
+## Store assets
+
+`store/` holds everything for the Play listing: the icon, raw device
+screenshots in `store/screenshots/`, and ready-to-upload art plus listing text
+in `store/play/` (see `store/play/listing.md`).
+
+```bash
+python tool/generate_store_assets.py     # icon 512, feature graphic, captions
+python tool/make_demo_backup.py store/demo_profile.json   # played-in profile
+```
+
+`demo_profile.json` is a normal backup file: push it to a device and import it
+from Settings to set up a profile worth screenshotting.
 
 ## Design notes
 
@@ -88,6 +131,7 @@ tool/             generate_audio.py, generate_icons_test.dart, solve_swipes.dart
 
 - Create the non-consumable product `maze_adventure_full_unlock` in Play
   Console and App Store Connect (the id is in `assets/config/game_config.json`).
+- Swap in real AdMob ids (see **Ads**) and add a privacy policy URL.
 - Set up release signing for Android and a bundle id/team for iOS.
 - Only English and Hindi ship today. Add an ARB file under
   `lib/core/localization/arb/` and a code in `shippedLocales` for each new
