@@ -6,7 +6,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'ad_config.dart';
 
 /// Google AdMob: a banner pinned to the bottom of every screen and a
-/// full-screen ad after every second finished maze.
+/// full-screen ad after every finished maze.
 ///
 /// The game is aimed at children, so every request is tagged as
 /// child-directed with a G content rating, which is what the Play Families

@@ -44,10 +44,11 @@ class AdConfig {
       interstitialUnitId == _testInterstitialAndroid ||
       interstitialUnitId == _testInterstitialIos;
 
-  /// A full-screen ad after every second finished maze.
-  static const mazesPerInterstitial = 2;
+  /// A full-screen ad after every finished maze, by product decision.
+  static const mazesPerInterstitial = 1;
 
   /// Never show two full-screen ads within this window, however fast the
-  /// player finishes mazes.
-  static const minInterstitialGap = Duration(seconds: 45);
+  /// player finishes mazes. Short, because every maze now ends with one: it
+  /// only guards against a maze finished seconds after the last ad closed.
+  static const minInterstitialGap = Duration(seconds: 10);
 }
