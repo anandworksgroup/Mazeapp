@@ -30,7 +30,9 @@ android {
         manifestPlaceholders["admobAppId"] =
             (project.findProperty("admobAppId") as String?)
                 ?: "ca-app-pub-3940256099942544~3347511713"
-        targetSdk = flutter.targetSdkVersion
+        // Play requires new apps to target the current API level; Flutter's
+        // default still lags a release behind.
+        targetSdk = 36
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
